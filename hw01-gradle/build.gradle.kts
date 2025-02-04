@@ -4,10 +4,8 @@ plugins {
     id("com.github.johnrengelman.shadow")
 }
 
-val guava: String by rootProject.extra
-
 dependencies {
-    implementation("com.google.guava:guava:${guava}")
+    implementation ("com.google.guava:guava")
 }
 
 tasks {
