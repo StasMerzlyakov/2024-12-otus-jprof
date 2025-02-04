@@ -28,7 +28,6 @@ class CustomerTest {
     }
 
     @Test
-    @Disabled("надо удалить") // надо удалить
     @DisplayName("Объект Customer как ключ в карте")
     void customerAsKeyTest() {
         // given
