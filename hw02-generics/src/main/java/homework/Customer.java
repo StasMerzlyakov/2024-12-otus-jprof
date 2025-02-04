@@ -2,11 +2,16 @@ package homework;
 
 import java.util.Objects;
 
-// Исправление: методы equals и hashCode зависят теперь только от поля id
 public class Customer {
     private final long id;
     private String name;
     private long scores;
+
+    public Customer(Customer exists) {
+        this.id = exists.id;
+        this.name = exists.name;
+        this.scores = exists.scores;
+    }
 
     public Customer(long id, String name, long scores) {
         this.id = id;
