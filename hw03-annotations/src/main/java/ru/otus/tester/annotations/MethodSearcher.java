@@ -6,6 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.tester.invoker.TestClassInfo;
 
+/**
+ * Отвечает за:
+ *  - поиск класса по переданному имени
+ *  - проверку класса на возможность инстанциирования без параметров
+ *  - поиск методов помеченных аннотациями @After @Before @Test
+ *  - проверку, что аннотации расставлены как нужно
+ */
 public class MethodSearcher implements IMethodSearcher {
 
     private static Logger logger = LoggerFactory.getLogger(MethodSearcher.class);
@@ -17,14 +24,7 @@ public class MethodSearcher implements IMethodSearcher {
     public TestClassInfo getClassInfo(String className) throws MethodSearchException {
         logger.debug("getClassInfo {} start", className);
 
-        Class<?> clazz;
-
-        try {
-            clazz = Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            logger.error("class {} not found", className);
-            throw new MethodSearchException(e.getMessage());
-        }
+        var clazz = loadClass(className);
 
         Method after = null;
         Method before = null;
@@ -67,6 +67,25 @@ public class MethodSearcher implements IMethodSearcher {
         }
 
         return new TestClassInfo(clazz, after, before, tests.toArray(new Method[] {}));
+    }
+
+    private Class<?> loadClass(String className) throws MethodSearchException {
+        Class<?> clazz;
+
+        try {
+            clazz = Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            logger.error("class {} not found", className);
+            throw new MethodSearchException(e.getMessage());
+        }
+
+        try {
+            clazz.getConstructor();
+        } catch (NoSuchMethodException ex) {
+            logger.error("class {} does not have default non arguments constructor", className);
+            throw new MethodSearchException(ex.getMessage());
+        }
+        return clazz;
     }
 
     private void testTestMethod(Method method) throws MethodSearchException {
