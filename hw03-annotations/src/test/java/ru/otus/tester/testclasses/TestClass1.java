@@ -8,7 +8,7 @@ import ru.otus.tester.annotations.Test;
 public class TestClass1 {
 
     @Before
-    public void before() {}
+    public void before() throws CustomTestException {}
 
     @After
     public void after() {}

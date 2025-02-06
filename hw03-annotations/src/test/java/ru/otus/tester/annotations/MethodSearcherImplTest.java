@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import ru.otus.tester.invoker.TestClassInfo;
 
 @DisplayName("Если загружаем класс")
-class TestMethodSearcher {
+class MethodSearcherImplTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"unkown.class.Name"})
@@ -24,7 +24,7 @@ class TestMethodSearcher {
     @ValueSource(strings = {"ru.otus.tester.testclasses.TestClass1"})
     @DisplayName("который содержит корректные данные, то методы найдены")
     void doGoodClassTest(String className) {
-        MethodSearcher methodSearcher = new MethodSearcher();
+        MethodSearcherImpl methodSearcher = new MethodSearcherImpl();
 
         // Можно ли совместить assertThatNoException с получением результата
         AtomicReference<TestClassInfo> testClassInfo = new AtomicReference<>();
@@ -43,7 +43,7 @@ class TestMethodSearcher {
     @ValueSource(strings = {"ru.otus.tester.testclasses.TestClass2"})
     @DisplayName("который содержит корректные данные, но без методов @After и @Before")
     void doGoodClassTest2(String className) {
-        MethodSearcher methodSearcher = new MethodSearcher();
+        MethodSearcherImpl methodSearcher = new MethodSearcherImpl();
 
         // Можно ли совместить assertThatNoException с получением результата
         AtomicReference<TestClassInfo> testClassInfo = new AtomicReference<>();
@@ -62,7 +62,7 @@ class TestMethodSearcher {
     @ValueSource(strings = {"ru.otus.tester.testclasses.TestClass3"})
     @DisplayName("который не содержит методов для тестирования")
     void doGoodClassTest3(String className) {
-        MethodSearcher methodSearcher = new MethodSearcher();
+        MethodSearcherImpl methodSearcher = new MethodSearcherImpl();
 
         // Можно ли совместить assertThatNoException с получением результата
         AtomicReference<TestClassInfo> testClassInfo = new AtomicReference<>();
@@ -90,7 +90,7 @@ class TestMethodSearcher {
     }
 
     private void checkMethodSearchException(String className) {
-        MethodSearcher methodSearcher = new MethodSearcher();
+        MethodSearcherImpl methodSearcher = new MethodSearcherImpl();
 
         // when
         Throwable thrown = catchThrowable(() -> {
