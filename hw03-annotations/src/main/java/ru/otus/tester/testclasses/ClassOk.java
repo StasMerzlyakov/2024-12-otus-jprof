@@ -1,12 +1,11 @@
-package ru.otus.tester;
+package ru.otus.tester.testclasses;
 
 import ru.otus.tester.annotations.After;
 import ru.otus.tester.annotations.Before;
 import ru.otus.tester.annotations.Test;
 
-// Исключительно для проверки вызова java -jar ./build/libs/gradleTestRunner-0.1.jar ru.otus.tester.TestClassInv
 @SuppressWarnings("squid:S1186")
-public class TestClassInv {
+public class ClassOk {
     @Before
     public void before() {}
 

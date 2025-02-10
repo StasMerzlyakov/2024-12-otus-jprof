@@ -8,17 +8,14 @@ import ru.otus.tester.invoker.TestClassInfo;
 
 /**
  * Отвечает за:
- *  - поиск класса по переданному имени
- *  - проверку класса на возможность инстанциирования без параметров
- *  - поиск методов помеченных аннотациями @After @Before @Test
- *  - проверку, что аннотации расставлены как нужно
+ * - поиск класса по переданному имени
+ * - проверку класса на возможность инстанциирования без параметров
+ * - поиск методов помеченных аннотациями @After @Before @Test
+ * - проверку, что аннотации расставлены как нужно
  */
 public class MethodSearcherImpl implements MethodSearcher {
 
     private static Logger logger = LoggerFactory.getLogger(MethodSearcherImpl.class);
-
-    private static final String WRONG_ANNOTOTATION = "wrong annotations";
-    private static final String WRONG_ANNOTOTATION_TEMPLATE = "wrong annotations on method {}";
 
     @Override
     public TestClassInfo getClassInfo(String className) throws MethodSearchException {
@@ -26,32 +23,21 @@ public class MethodSearcherImpl implements MethodSearcher {
 
         var clazz = loadClass(className);
 
-        Method after = null;
-        Method before = null;
-        var tests = new ArrayList<>();
+        var after = new ArrayList<Method>();
+        var before = new ArrayList<Method>();
+        var tests = new ArrayList<Method>();
 
         for (Method meth : clazz.getMethods()) {
             if (meth.isAnnotationPresent(After.class)) {
-                if (after != null) {
-                    logger.error("method with annotation @After already present on method {}", after.getName());
-                    throw new MethodSearchException(WRONG_ANNOTOTATION);
-                }
                 testAfterMethod(meth);
                 logger.debug("found @Auth method {}", meth.getName());
-                after = meth;
+                after.add(meth);
             }
 
             if (meth.isAnnotationPresent(Before.class)) {
-
-                if (before != null) {
-                    logger.error("method with annotation @Before already present on method {}", before.getName());
-                    throw new MethodSearchException(WRONG_ANNOTOTATION);
-                }
-
                 testBeforeMethod(meth);
-
                 logger.debug("found @Before method {}", meth.getName());
-                before = meth;
+                before.add(meth);
             }
 
             if (meth.isAnnotationPresent(Test.class)) {
@@ -66,7 +52,7 @@ public class MethodSearcherImpl implements MethodSearcher {
             logger.warn("no tests found");
         }
 
-        return new TestClassInfo(clazz, after, before, tests.toArray(new Method[] {}));
+        return new TestClassInfo(clazz, after, before, tests);
     }
 
     private Class<?> loadClass(String className) throws MethodSearchException {
@@ -90,37 +76,47 @@ public class MethodSearcherImpl implements MethodSearcher {
 
     private void testTestMethod(Method method) throws MethodSearchException {
         testMethod(method);
-        if (method.isAnnotationPresent(After.class) || method.isAnnotationPresent(Before.class)) {
-            logger.error(WRONG_ANNOTOTATION_TEMPLATE, method.getName());
-            throw new MethodSearchException(WRONG_ANNOTOTATION);
+
+        if (method.isAnnotationPresent(Before.class)) {
+            throw new MethodSearchException(
+                    String.format("Method %s have @Test annotation and @Before", method.getName()));
         }
     }
 
     private void testBeforeMethod(Method method) throws MethodSearchException {
         testMethod(method);
-        if (method.isAnnotationPresent(After.class) || method.isAnnotationPresent(Test.class)) {
-            logger.error(WRONG_ANNOTOTATION_TEMPLATE, method.getName());
-            throw new MethodSearchException(WRONG_ANNOTOTATION);
+        if (method.isAnnotationPresent(After.class)) {
+            throw new MethodSearchException(
+                    String.format("Method %s have @Before annotation and @After", method.getName()));
+        }
+
+        if (method.isAnnotationPresent(Test.class)) {
+            throw new MethodSearchException(
+                    String.format("Method %s have @Before annotation and @Test", method.getName()));
         }
     }
 
     private void testAfterMethod(Method method) throws MethodSearchException {
         testMethod(method);
-        if (method.isAnnotationPresent(Before.class) || method.isAnnotationPresent(Test.class)) {
-            logger.error(WRONG_ANNOTOTATION_TEMPLATE, method.getName());
-            throw new MethodSearchException(WRONG_ANNOTOTATION);
+        if (method.isAnnotationPresent(Before.class)) {
+            throw new MethodSearchException(
+                    String.format("Method %s have @After annotation and @Before", method.getName()));
+        }
+
+        if (method.isAnnotationPresent(Test.class)) {
+            throw new MethodSearchException(
+                    String.format("Method %s have @Test annotation and @Before", method.getName()));
         }
     }
 
     private void testMethod(Method method) throws MethodSearchException {
         if (!method.getReturnType().equals(void.class)) {
-            logger.error("method {} have wrong return type, expected void", method.getName());
-            throw new MethodSearchException("wrong return type");
+            throw new MethodSearchException(
+                    String.format("method %s have wrong return type, expected void", method.getName()));
         }
 
         if (method.getParameterCount() != 0) {
-            logger.error("method {} have unexpected parameters", method.getName());
-            throw new MethodSearchException("test method have paramters");
+            throw new MethodSearchException(String.format("method %s must not have parameters", method.getName()));
         }
     }
 }

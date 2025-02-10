@@ -1,12 +1,14 @@
 package ru.otus.tester.invoker;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.lang.reflect.Method;
+import java.util.LinkedList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -24,10 +26,22 @@ class TestInvokerImplTest {
     @Test
     void doInvokeTest() throws Exception {
         Class<?> testClass = TestClass1.class;
-        Method before = testClass.getMethod("before");
-        assertThat(before).isNotNull();
+        List<Method> before = new LinkedList<>() {
+            {
+                var m = testClass.getMethod("before");
+                assertThat(m).isNotNull();
+                add(m);
+            }
+        };
 
-        Method after = testClass.getMethod("after");
+        List<Method> after = new LinkedList<>() {
+            {
+                var m = testClass.getMethod("after");
+                assertThat(m).isNotNull();
+                add(m);
+            }
+        };
+
         assertThat(after).isNotNull();
 
         Method test1 = testClass.getMethod("test1");
@@ -61,11 +75,21 @@ class TestInvokerImplTest {
     @Test
     void doInvokeTest2() throws Exception {
         Class<?> testClass = TestClass1.class;
-        Method before = testClass.getMethod("before");
-        assertThat(before).isNotNull();
+        List<Method> before = new LinkedList<>() {
+            {
+                var m = testClass.getMethod("before");
+                assertThat(m).isNotNull();
+                add(m);
+            }
+        };
 
-        Method after = testClass.getMethod("after");
-        assertThat(after).isNotNull();
+        List<Method> after = new LinkedList<>() {
+            {
+                var m = testClass.getMethod("after");
+                assertThat(m).isNotNull();
+                add(m);
+            }
+        };
 
         Method test1 = testClass.getMethod("test1");
         assertThat(test1).isNotNull();

@@ -1,7 +1,7 @@
 package ru.otus.tester.annotations;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -51,10 +51,10 @@ class MethodSearcherImplTest {
         TestClassInfo classInfo = testClassInfo.get();
 
         assertThat(classInfo.clazz()).isNotNull();
-        assertThat(classInfo.after()).isNull();
-        assertThat(classInfo.before()).isNull();
+        assertThat(classInfo.after()).isEmpty();
+        assertThat(classInfo.before()).isEmpty();
 
-        assertThat(classInfo.tests()).isNotNull();
+        assertThat(classInfo.tests()).isNotEmpty();
         assertThat(classInfo.tests()).hasSize(2);
     }
 
@@ -70,16 +70,16 @@ class MethodSearcherImplTest {
         TestClassInfo classInfo = testClassInfo.get();
 
         assertThat(classInfo.clazz()).isNotNull();
-        assertThat(classInfo.after()).isNull();
-        assertThat(classInfo.before()).isNull();
+        assertThat(classInfo.after()).isEmpty();
+        assertThat(classInfo.before()).isEmpty();
         assertThat(classInfo.tests()).isEmpty();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"ru.otus.tester.testclasses.TestClass4"})
-    @DisplayName("который содержит два метода @After, то получим исключение MethodSearchException")
+    @DisplayName("который содержит два метода @After то ошибок не будет")
     void doDoubleAfterTest(String className) {
-        checkMethodSearchException(className);
+        checkMethodSearchWithoutException(className);
     }
 
     @ParameterizedTest
@@ -99,5 +99,10 @@ class MethodSearcherImplTest {
 
         // then
         assertThat(thrown).isInstanceOf(MethodSearchException.class);
+    }
+
+    private void checkMethodSearchWithoutException(String className) {
+        MethodSearcherImpl methodSearcher = new MethodSearcherImpl();
+        assertThatNoException().isThrownBy(() -> methodSearcher.getClassInfo(className));
     }
 }
