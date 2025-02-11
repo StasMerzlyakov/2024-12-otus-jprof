@@ -1,0 +1,57 @@
+SLF4J(I): Connected with provider of type [ch.qos.logback.classic.spi.LogbackServiceProvider]
+20:49:45.368 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:49:45.368017685 current idx:0
+20:49:47.085 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:49:47.085449355 current idx:10000000
+20:49:48.707 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:49:48.707242431 current idx:20000000
+20:49:50.111 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:49:50.110988386 current idx:30000000
+20:49:51.520 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:49:51.520733895 current idx:40000000
+20:49:52.930 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:49:52.930631119 current idx:50000000
+20:49:54.337 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:49:54.337835579 current idx:60000000
+20:49:55.771 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:49:55.771452404 current idx:70000000
+20:49:57.194 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:49:57.194245398 current idx:80000000
+20:49:58.604 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:49:58.604097411 current idx:90000000
+20:50:00.012 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:00.012174435 current idx:100000000
+20:50:01.422 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:01.422532856 current idx:110000000
+20:50:02.832 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:02.832249112 current idx:120000000
+20:50:04.234 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:04.234410749 current idx:130000000
+20:50:05.640 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:05.640679855 current idx:140000000
+20:50:07.047 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:07.047804828 current idx:150000000
+20:50:08.454 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:08.453998109 current idx:160000000
+20:50:09.862 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:09.862934455 current idx:170000000
+20:50:11.271 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:11.271749899 current idx:180000000
+20:50:12.678 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:12.678280933 current idx:190000000
+20:50:14.088 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:14.088769533 current idx:200000000
+20:50:15.537 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:15.537294897 current idx:210000000
+20:50:17.051 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:17.051881855 current idx:220000000
+20:50:18.570 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:18.570111193 current idx:230000000
+20:50:20.087 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:20.087529619 current idx:240000000
+20:50:21.601 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:21.601977827 current idx:250000000
+20:50:23.119 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:23.119259370 current idx:260000000
+20:50:24.636 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:24.636717419 current idx:270000000
+20:50:26.153 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:26.153932283 current idx:280000000
+20:50:27.669 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:27.669666220 current idx:290000000
+20:50:29.186 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:29.186160195 current idx:300000000
+20:50:30.703 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:30.703025616 current idx:310000000
+20:50:32.218 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:32.218415508 current idx:320000000
+20:50:33.735 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:33.735465162 current idx:330000000
+20:50:35.253 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:35.253004072 current idx:340000000
+20:50:36.768 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:36.768432896 current idx:350000000
+20:50:38.284 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:38.284962168 current idx:360000000
+20:50:39.801 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:39.801638130 current idx:370000000
+20:50:41.317 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:41.317651957 current idx:380000000
+20:50:42.835 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:42.835862877 current idx:390000000
+20:50:44.355 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:44.354993535 current idx:400000000
+20:50:45.869 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:45.869077840 current idx:410000000
+20:50:47.385 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:47.385877502 current idx:420000000
+20:50:48.902 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:48.902945308 current idx:430000000
+20:50:50.419 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:50.419655761 current idx:440000000
+20:50:51.933 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:51.933532168 current idx:450000000
+20:50:53.450 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:53.450411608 current idx:460000000
+20:50:54.966 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:54.966316325 current idx:470000000
+20:50:56.481 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:56.481622524 current idx:480000000
+20:50:57.998 [main] INFO ru.opt1.CalcDemo -- 2025-02-10T20:50:57.998648396 current idx:490000000
+20:50:59.515 [main] INFO ru.opt1.CalcDemo -- PrevValue:499999999
+20:50:59.516 [main] INFO ru.opt1.CalcDemo -- PrevPrevValue:499999998
+20:50:59.516 [main] INFO ru.opt1.CalcDemo -- SumLastThreeValues:1499999994
+20:50:59.516 [main] INFO ru.opt1.CalcDemo -- SomeValue:354971938
+20:50:59.516 [main] INFO ru.opt1.CalcDemo -- Sum:-2132159184
+20:50:59.516 [main] INFO ru.opt1.CalcDemo -- spend msec:74149, sec:74
