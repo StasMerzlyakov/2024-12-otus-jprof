@@ -1,4 +1,4 @@
-package ru.otus.atm;
+package ru.otus.solid.storage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.otus.solid.model.Banknote;
 
 @DisplayName("Класс BanknoteStorageImpl")
 class BanknoteStorageImplTest {

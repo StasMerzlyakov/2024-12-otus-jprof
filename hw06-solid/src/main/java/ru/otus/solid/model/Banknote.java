@@ -1,17 +1,11 @@
-package ru.otus.atm;
+package ru.otus.solid.model;
 
 import java.util.Objects;
 
-public class Banknote {
-    private int nominal;
-
-    private Banknote(int nominal) {
-        this.nominal = nominal;
-    }
-
-    public int nominal() {
-        return nominal;
-    }
+/**
+ * Класс, представляющий собой банкноту конкретного номинала
+ */
+public record Banknote(int nominal) {
 
     public static final Banknote BANKNOTE_50 = new Banknote(50);
     public static final Banknote BANKNOTE_100 = new Banknote(100);

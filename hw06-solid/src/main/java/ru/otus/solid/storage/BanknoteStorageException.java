@@ -1,4 +1,4 @@
-package ru.otus.atm;
+package ru.otus.solid.storage;
 
 public class BanknoteStorageException extends Exception {
     public BanknoteStorageException(String message) {

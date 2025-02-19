@@ -1,6 +1,7 @@
-package ru.otus.atm;
+package ru.otus.solid.storage;
 
 import java.util.Map;
+import ru.otus.solid.model.Banknote;
 
 public interface BanknoteStorage {
     Map<Banknote, Integer> getBanknotesCount();
