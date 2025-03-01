@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import org.junit.jupiter.api.Test;
 import ru.otus.model.Message;
 
-public class SwapField11Field12ProcessorTest {
+class SwapField11Field12ProcessorTest {
 
     @Test
     void swapTest() {

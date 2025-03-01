@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import ru.otus.model.Message;
 
-public class EventSecondThrowExceptionProcessorTest {
+class EventSecondThrowExceptionProcessorTest {
 
     @Test
     void checkThrowException() {

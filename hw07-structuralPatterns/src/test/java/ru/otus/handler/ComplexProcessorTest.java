@@ -16,6 +16,7 @@ import ru.otus.listener.Listener;
 import ru.otus.model.Message;
 import ru.otus.processor.Processor;
 
+@SuppressWarnings("squid:S1611")
 class ComplexProcessorTest {
 
     @Test

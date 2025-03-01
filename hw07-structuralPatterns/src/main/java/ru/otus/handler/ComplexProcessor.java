@@ -7,6 +7,7 @@ import ru.otus.listener.Listener;
 import ru.otus.model.Message;
 import ru.otus.processor.Processor;
 
+@SuppressWarnings("squid:S4507")
 public class ComplexProcessor implements Handler {
 
     private final List<Listener> listeners = new ArrayList<>();
