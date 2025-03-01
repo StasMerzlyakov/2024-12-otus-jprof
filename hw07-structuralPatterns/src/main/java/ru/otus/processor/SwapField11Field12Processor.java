@@ -5,7 +5,7 @@ import ru.otus.model.Message;
 /**
  * Процессор, который поменяет местами значения field11 и field12
  */
-public class SwapProcessor implements Processor {
+public class SwapField11Field12Processor implements Processor {
     @Override
     public Message process(Message message) {
         String field11 = message.getField11();

@@ -5,11 +5,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import org.junit.jupiter.api.Test;
 import ru.otus.model.Message;
 
-public class SwapProcessorTest {
+public class SwapField11Field12ProcessorTest {
 
     @Test
     void swapTest() {
-        var processor = new SwapProcessor();
+        var processor = new SwapField11Field12Processor();
 
         var field11 = "field11";
         var field12 = "field12";
@@ -29,7 +29,7 @@ public class SwapProcessorTest {
 
     @Test
     void noChangeTest() {
-        var processor = new SwapProcessor();
+        var processor = new SwapField11Field12Processor();
 
         var field9 = "field9";
         var field10 = "field10";
