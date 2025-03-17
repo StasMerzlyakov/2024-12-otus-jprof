@@ -1,8 +1,8 @@
 package ru.otus.dataprocessor;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import ru.otus.model.Measurement;
 
@@ -19,8 +19,7 @@ public class ResourcesFileLoader implements Loader {
     @Override
     public List<Measurement> load() {
         try (var inputStream = ResourcesFileLoader.class.getClassLoader().getResourceAsStream(fileName)) {
-            return Arrays.stream(mapper.readValue(inputStream, Measurement[].class))
-                    .toList();
+            return mapper.readValue(inputStream, new TypeReference<>() {});
         } catch (IOException e) {
             throw new FileProcessException(e);
         }
