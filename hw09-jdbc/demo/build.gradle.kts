@@ -6,6 +6,7 @@ val flyway:  String by rootProject.extra
 val hikari:  String by rootProject.extra
 
 dependencies {
+    implementation(project(":hw09-jdbc:api"))
     implementation("ch.qos.logback:logback-classic:${logback}")
     implementation("org.flywaydb:flyway-core:${flyway}")
     implementation("com.zaxxer:HikariCP:${hikari}")
