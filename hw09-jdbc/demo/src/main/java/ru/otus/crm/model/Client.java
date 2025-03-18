@@ -5,6 +5,7 @@ import ru.otus.jdbc.api.Id;
 public class Client {
     @Id
     private Long id;
+
     private String name;
 
     public Client() {}

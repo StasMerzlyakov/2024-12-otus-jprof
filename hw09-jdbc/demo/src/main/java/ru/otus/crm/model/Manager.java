@@ -5,6 +5,7 @@ import ru.otus.jdbc.api.Id;
 public class Manager {
     @Id
     private Long no;
+
     private String label;
     private String param1;
 
