@@ -32,7 +32,7 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
                 "selectByIdSql",
                 s -> String.format(
                         "select %s from %s where %s = ?",
-                        entityClassMetaData.getFieldsWithoutId().stream()
+                        entityClassMetaData.getAllFields().stream()
                                 .map(field -> field.getName())
                                 .collect(Collectors.joining(", ")),
                         entityClassMetaData.getName(),

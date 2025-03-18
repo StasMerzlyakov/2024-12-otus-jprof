@@ -8,7 +8,7 @@ import ru.otus.jdbc.api.Id;
 
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     private final String name;
-    private final Constructor<T> constructor;
+    private final Constructor<T> allArgumentsConstructor;
     private Field idField;
     private List<Field> allFields = new LinkedList<>();
     private List<Field> fieldsWithoutId = new LinkedList<>();
@@ -16,11 +16,6 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     public EntityClassMetaDataImpl(Class<T> clazz) {
 
         name = clazz.getSimpleName().toLowerCase();
-        try {
-            constructor = clazz.getConstructor();
-        } catch (NoSuchMethodException e) {
-            throw new EntityClassMetaDataException(e);
-        }
 
         for (Field field : clazz.getDeclaredFields()) {
             if (field.isAnnotationPresent(Id.class)) {
@@ -34,6 +29,15 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
                 allFields.add(field);
             }
         }
+
+        try {
+            var classArray =
+                    allFields.stream().map(field -> field.getType())
+                            .toList().toArray(new Class[] {});
+            allArgumentsConstructor = clazz.getConstructor(classArray);
+        } catch (NoSuchMethodException e) {
+            throw new EntityClassMetaDataException(e);
+        }
     }
 
     @Override
@@ -43,7 +47,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
     @Override
     public Constructor<T> getConstructor() {
-        return constructor;
+        return allArgumentsConstructor;
     }
 
     @Override
