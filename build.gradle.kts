@@ -62,6 +62,8 @@ allprojects {
             force("org.jetbrains.kotlin:kotlin-stdlib-common:1.6.10")
             force("org.apache.commons:commons-lang3:3.14.0")
             force("net.bytebuddy:byte-buddy:1.15.4")
+            force("org.slf4j:slf4j-api:1.7.36")
+            force("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
         }
     }
 }
