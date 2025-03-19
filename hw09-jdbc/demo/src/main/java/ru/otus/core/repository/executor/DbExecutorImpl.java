@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -39,6 +40,21 @@ public class DbExecutorImpl implements DbExecutor {
             }
         } catch (SQLException ex) {
             throw new DataBaseOperationException("executeSelect error", ex);
+        }
+    }
+
+    @Override
+    public <T> List<T> executeSelectAll(Connection connection, String sql, Function<ResultSet, T> rsHandler) {
+        List<T> resultList = new LinkedList<>();
+        try (var pst = connection.prepareStatement(sql);
+                var rs = pst.executeQuery()) {
+            T t;
+            while ((t = rsHandler.apply(rs)) != null) {
+                resultList.add(t);
+            }
+            return resultList;
+        } catch (SQLException ex) {
+            throw new DataBaseOperationException("executeSelectAll error", ex);
         }
     }
 }

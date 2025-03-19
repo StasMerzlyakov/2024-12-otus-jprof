@@ -1,5 +1,6 @@
 package ru.otus.jdbc.mapper;
 
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
                 s -> String.format(
                         "select %s from %s",
                         entityClassMetaData.getAllFields().stream()
-                                .map(field -> field.getName())
+                                .map(Member::getName)
                                 .collect(Collectors.joining(", ")),
                         entityClassMetaData.getName()));
     }
@@ -33,7 +34,7 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
                 s -> String.format(
                         "select %s from %s where %s = ?",
                         entityClassMetaData.getAllFields().stream()
-                                .map(field -> field.getName())
+                                .map(Member::getName)
                                 .collect(Collectors.joining(", ")),
                         entityClassMetaData.getName(),
                         entityClassMetaData.getIdField().getName()));
@@ -47,7 +48,7 @@ public class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
                         "insert into %s(%s) values (%s)",
                         entityClassMetaData.getName(),
                         entityClassMetaData.getFieldsWithoutId().stream()
-                                .map(field -> field.getName())
+                                .map(Member::getName)
                                 .collect(Collectors.joining(", ")),
                         entityClassMetaData.getFieldsWithoutId().stream()
                                 .map(field -> "?")

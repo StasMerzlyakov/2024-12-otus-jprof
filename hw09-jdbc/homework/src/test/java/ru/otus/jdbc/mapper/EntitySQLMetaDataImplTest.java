@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import ru.otus.crm.model.Client;
 import ru.otus.crm.model.Manager;
 
-public class EntitySQLMetaDataImplTest {
+class EntitySQLMetaDataImplTest {
     @Test
     @DisplayName("проверка Client")
     void doTest1() {
