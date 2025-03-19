@@ -36,7 +36,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
                             .toList().toArray(new Class[] {});
             allArgumentsConstructor = clazz.getConstructor(classArray);
         } catch (NoSuchMethodException e) {
-            throw new EntityClassMetaDataException(e);
+            throw new EntityClassMetaDataException("can't find all arguments constructor");
         }
     }
 
