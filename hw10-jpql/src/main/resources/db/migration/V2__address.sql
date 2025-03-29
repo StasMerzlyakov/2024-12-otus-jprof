@@ -1,7 +1,9 @@
 -- Для @GeneratedValue(strategy = GenerationType.IDENTITY)
-create table client
+create table address
 (
     id   bigserial not null primary key,
-    name varchar(50)
+    street varchar(50)
+    client_id bigint not null;
 );
+
 
