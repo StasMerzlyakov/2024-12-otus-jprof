@@ -24,4 +24,8 @@ public class Address {
         this.id = id;
         this.street = street;
     }
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "client_id")
+    private Client client;
 }

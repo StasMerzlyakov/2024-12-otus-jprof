@@ -1,7 +1,7 @@
 create table address
 (
     id   bigserial not null primary key,
+    client_id bigint not null,
     street varchar(50)
 );
 
-alter table client add column address_id bigint;

@@ -24,4 +24,8 @@ public class Phone {
 
     @Column(name = "number")
     private String number;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "client_id")
+    private Client client;
 }

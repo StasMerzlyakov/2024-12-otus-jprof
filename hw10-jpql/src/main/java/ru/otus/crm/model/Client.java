@@ -32,23 +32,29 @@ public class Client implements Cloneable {
         this.name = name;
     }
 
+    @SuppressWarnings("this-escape")
     public <E> Client(Long id, String name, Address address, List<Phone> phones) {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.phones = phones;
+        initReferences();
     }
 
-    public <E> Client(Long id, String name, Address address) {
-        this.id = id;
-        this.name = name;
+    private void initReferences() {
+        if (this.address != null) {
+            this.address.setClient(this);
+        }
+        if (this.phones != null) {
+            this.phones.stream().forEach(phone -> phone.setClient(this));
+        }
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "address_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "client")
+    @PrimaryKeyJoinColumn
     private Address address;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "client_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "client")
     private List<Phone> phones = Collections.emptyList();
 
     @Override
