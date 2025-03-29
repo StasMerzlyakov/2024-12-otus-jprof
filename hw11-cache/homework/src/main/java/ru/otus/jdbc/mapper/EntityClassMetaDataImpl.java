@@ -9,7 +9,7 @@ import ru.otus.jdbc.api.Id;
 @SuppressWarnings("java:S3011")
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     private final String name;
-    private final Constructor<T> allArgumentsConstructor;
+    private final Constructor<T> nonArgumentsConstructor;
     private Field idField;
     private List<Field> allFields = new LinkedList<>();
     private List<Field> fieldsWithoutId = new LinkedList<>();
@@ -33,8 +33,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
         }
 
         try {
-            var classArray = allFields.stream().map(Field::getType).toList().toArray(new Class[] {});
-            allArgumentsConstructor = clazz.getConstructor(classArray);
+            nonArgumentsConstructor = clazz.getConstructor();
         } catch (NoSuchMethodException e) {
             throw new EntityClassMetaDataException("can't find all arguments constructor");
         }
@@ -47,7 +46,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
     @Override
     public Constructor<T> getConstructor() {
-        return allArgumentsConstructor;
+        return nonArgumentsConstructor;
     }
 
     @Override
