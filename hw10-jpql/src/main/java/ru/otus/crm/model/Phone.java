@@ -24,8 +24,4 @@ public class Phone {
 
     @Column(name = "number")
     private String number;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, mappedBy = "client")
-    @JoinColumn(name = "client_id")
-    private Client client;
 }

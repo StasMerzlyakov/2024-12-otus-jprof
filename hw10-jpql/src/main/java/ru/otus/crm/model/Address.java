@@ -13,17 +13,12 @@ import lombok.Setter;
 public class Address {
 
     @Id
-    @SequenceGenerator(name = "client_gen", sequenceName = "client_seq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "street")
     private String street;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, mappedBy = "client")
-    @JoinColumn(name = "client_id")
-    private Client client;
 
     public Address(Long id, String street) {
         this.id = id;
