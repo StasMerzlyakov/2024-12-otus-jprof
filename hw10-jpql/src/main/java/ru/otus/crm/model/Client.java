@@ -1,6 +1,7 @@
 package ru.otus.crm.model;
 
 import jakarta.persistence.*;
+import java.util.Collections;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,7 +49,7 @@ public class Client implements Cloneable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "client_id")
-    private List<Phone> phones;
+    private List<Phone> phones = Collections.emptyList();
 
     @Override
     @SuppressWarnings({"java:S2975", "java:S1182"})
