@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import ru.otus.crm.model.Client;
 import ru.otus.crm.model.Manager;
 
+@SuppressWarnings("java:S3011")
 class EntityClassMetaDataImplTest {
     @Test
     @DisplayName("проверка Client")

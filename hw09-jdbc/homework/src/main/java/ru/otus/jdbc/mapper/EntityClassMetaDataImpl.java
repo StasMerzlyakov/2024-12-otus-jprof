@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import ru.otus.jdbc.api.Id;
 
+@SuppressWarnings("java:S3011")
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     private final String name;
     private final Constructor<T> allArgumentsConstructor;
