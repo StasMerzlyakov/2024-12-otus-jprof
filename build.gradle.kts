@@ -64,6 +64,8 @@ allprojects {
             force("net.bytebuddy:byte-buddy:1.15.4")
             force("org.slf4j:slf4j-api:2.0.15")
             force("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
+            force("org.antlr:antlr4-runtime:4.13.2")
+            force("jakarta.activation:jakarta.activation-api:2.1.1")
         }
     }
 }
