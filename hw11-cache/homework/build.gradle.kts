@@ -1,3 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+plugins {
+    id("com.github.johnrengelman.shadow")
+}
+
 val logback: String by rootProject.extra
 val flyway: String by rootProject.extra
 val postgresql: String by rootProject.extra
@@ -13,4 +19,19 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("org.assertj:assertj-core:${assertj}")
+}
+
+tasks {
+    named<ShadowJar>("shadowJar") {
+        archiveBaseName.set("cache")
+        archiveVersion.set("0.1")
+        archiveClassifier.set("")
+        manifest {
+            attributes(mapOf("Main-Class" to "ru.otus.HomeWork"))
+        }
+    }
+
+    build {
+        dependsOn(shadowJar)
+    }
 }
