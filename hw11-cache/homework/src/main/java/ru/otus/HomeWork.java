@@ -67,18 +67,20 @@ public class HomeWork {
         cachedServiceManager.saveManager(new Manager("ManagerFirst"));
 
         var managerSecond = cachedServiceManager.saveManager(new Manager("ManagerSecond"));
-        var managerSecondSelected = cachedServiceManager
+
+        System.gc();
+
+        // Информация о времени доступа
+        long start = System.nanoTime();
+        cachedServiceManager
                 .getManager(managerSecond.getNo())
                 .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerSecond.getNo()));
-        log.info("managerSecondSelected:{}", managerSecondSelected);
-
-        for (int i = 0; i < 5000; i++) {
-            cachedServiceManager.saveManager(new Manager("ManagerSecond" + i));
-        }
-        log.info("before gc cache size {}", cachedServiceManager.size());
-        System.gc();
-        Thread.sleep(3000);
-        log.info("after gc cache size {}", cachedServiceManager.size());
+        log.info("first iteration ns {}", System.nanoTime() - start);
+        start = System.nanoTime();
+        cachedServiceManager
+                .getManager(managerSecond.getNo())
+                .orElseThrow(() -> new RuntimeException("Manager not found, id:" + managerSecond.getNo()));
+        log.info("second iteration ns {}", System.nanoTime() - start);
     }
 
     private static void flywayMigrations(DataSource dataSource) {

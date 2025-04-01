@@ -1,11 +1,10 @@
 package ru.otus.cache;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.WeakHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.cachehw.MyCache;
 import ru.otus.crm.model.Client;
 import ru.otus.crm.service.DBServiceClient;
 
@@ -15,29 +14,24 @@ public class CachedServiceClient implements DBServiceClient {
 
     private final DBServiceClient dbService;
 
-    private final Map<String, Client> cache;
+    private final MyCache<Long, Client> cache;
 
     public CachedServiceClient(DBServiceClient dbService) {
         this.dbService = dbService;
-        this.cache = new WeakHashMap<>();
-    }
-
-    public Integer size() {
-        return this.cache.size();
+        this.cache = new MyCache<>();
     }
 
     @Override
     public Client saveClient(Client client) {
         var saved = dbService.saveClient(client);
-        cache.put("key" + saved.getId(), saved);
+        cache.put(saved.getId(), client);
         log.info("saved client: {}", saved);
         return saved;
     }
 
     @Override
     public Optional<Client> getClient(long id) {
-        var cacheKey = "key" + id;
-        var fromCache = cache.get(cacheKey);
+        var fromCache = cache.get(id);
         if (fromCache != null) {
             log.info("client restored from cache: {}", fromCache);
             return Optional.of(fromCache);
@@ -45,7 +39,11 @@ public class CachedServiceClient implements DBServiceClient {
 
         var fromDB = dbService.getClient(id);
         if (fromDB.isPresent()) {
-            cache.put(cacheKey, fromDB.get());
+            var fromDBClient = fromDB.get();
+            cache.put(id, fromDBClient);
+            log.info("client restored from db: {}", fromDBClient);
+        } else {
+            log.info("client {} is not present", id);
         }
 
         return fromDB;
