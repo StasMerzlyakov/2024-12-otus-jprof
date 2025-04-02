@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.cache.CachedServiceClient;
 import ru.otus.cache.CachedServiceManager;
+import ru.otus.cachehw.MyCache;
 import ru.otus.core.repository.executor.DbExecutorImpl;
 import ru.otus.core.sessionmanager.TransactionRunnerJdbc;
 import ru.otus.crm.datasource.DriverManagerDataSource;
@@ -43,7 +44,8 @@ public class HomeWork {
         // Код дальше должен остаться
         var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
 
-        var cachedServiceClient = new CachedServiceClient(dbServiceClient);
+        var clientCache = new MyCache<Long, Client>();
+        var cachedServiceClient = new CachedServiceClient(dbServiceClient, clientCache);
 
         cachedServiceClient.saveClient(new Client("dbServiceFirst"));
 
@@ -62,7 +64,8 @@ public class HomeWork {
                 dbExecutor, entitySQLMetaDataManager, resultSetMapperManager, entityClassMetaDataManager);
 
         var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
-        var cachedServiceManager = new CachedServiceManager(dbServiceManager);
+        var managerCache = new MyCache<Long, Manager>();
+        var cachedServiceManager = new CachedServiceManager(dbServiceManager, managerCache);
 
         cachedServiceManager.saveManager(new Manager("ManagerFirst"));
 

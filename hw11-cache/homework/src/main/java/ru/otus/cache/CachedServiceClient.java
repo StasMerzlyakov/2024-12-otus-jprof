@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.cachehw.MyCache;
+import ru.otus.cachehw.HwCache;
 import ru.otus.crm.model.Client;
 import ru.otus.crm.service.DBServiceClient;
 
@@ -14,11 +14,11 @@ public class CachedServiceClient implements DBServiceClient {
 
     private final DBServiceClient dbService;
 
-    private final MyCache<Long, Client> cache;
+    private final HwCache<Long, Client> cache;
 
-    public CachedServiceClient(DBServiceClient dbService) {
+    public CachedServiceClient(DBServiceClient dbService, HwCache<Long, Client> cache) {
         this.dbService = dbService;
-        this.cache = new MyCache<>();
+        this.cache = cache;
     }
 
     @Override
@@ -51,6 +51,8 @@ public class CachedServiceClient implements DBServiceClient {
 
     @Override
     public List<Client> findAll() {
-        return dbService.findAll();
+        List<Client> all = dbService.findAll();
+        all.forEach(client -> cache.put(client.getId(), client));
+        return all;
     }
 }
