@@ -32,3 +32,10 @@ findProject(":hw09-jdbc:homework")?.name = "homework"
 include("hw09-jdbc:api")
 findProject(":hw09-jdbc:api")?.name = "api"
 include("hw10-jpql")
+
+include("hw11-cache:demo")
+findProject(":hw11-cache:demo")?.name = "demo"
+include("hw11-cache:homework")
+findProject(":hw11-cache:homework")?.name = "homework"
+include("hw11-cache:api")
+findProject(":hw11-cache:api")?.name = "api"
