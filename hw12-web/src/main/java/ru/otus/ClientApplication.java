@@ -1,4 +1,4 @@
-package ru.otus.demo;
+package ru.otus;
 
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
@@ -11,14 +11,36 @@ import ru.otus.crm.model.Address;
 import ru.otus.crm.model.Client;
 import ru.otus.crm.model.Phone;
 import ru.otus.crm.service.DbServiceClientImpl;
+import ru.otus.server.ClientWebServer;
+import ru.otus.server.ClientWebServerImpl;
+import ru.otus.services.ServiceClient;
+import ru.otus.services.ServiceClientImpl;
+import ru.otus.services.TemplateProcessor;
+import ru.otus.services.TemplateProcessorImpl;
 
-public class DbServiceDemo {
+public class ClientApplication {
 
-    private static final Logger log = LoggerFactory.getLogger(DbServiceDemo.class);
+    private static final Logger log = LoggerFactory.getLogger(ClientApplication.class);
 
     public static final String HIBERNATE_CFG_FILE = "hibernate.cfg.xml";
 
-    public static void main(String[] args) {
+    private static final int WEB_SERVER_PORT = 8080;
+    private static final String TEMPLATES_DIR = "/templates/";
+
+    public static void main(String[] args) throws Exception {
+        var serviceClient = createServiceClient();
+        var templateProcessor = creteTemplateProcessor();
+        ClientWebServer server = new ClientWebServerImpl(WEB_SERVER_PORT, serviceClient, templateProcessor);
+
+        server.start();
+        server.join();
+    }
+
+    private static TemplateProcessor creteTemplateProcessor() {
+        return new TemplateProcessorImpl(TEMPLATES_DIR);
+    }
+
+    private static ServiceClient createServiceClient() {
         var configuration = new Configuration().configure(HIBERNATE_CFG_FILE);
 
         var dbUrl = configuration.getProperty("hibernate.connection.url");
@@ -33,23 +55,11 @@ public class DbServiceDemo {
         var transactionManager = new TransactionManagerHibernate(sessionFactory);
         ///
         var clientTemplate = new DataTemplateHibernate<>(Client.class);
-        ///
+
         var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
-        dbServiceClient.saveClient(new Client("dbServiceFirst"));
 
-        var clientSecond = dbServiceClient.saveClient(new Client("dbServiceSecond"));
-        var clientSecondSelected = dbServiceClient
-                .getClient(clientSecond.getId())
-                .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecond.getId()));
-        log.info("clientSecondSelected:{}", clientSecondSelected);
-        ///
-        dbServiceClient.saveClient(new Client(clientSecondSelected.getId(), "dbServiceSecondUpdated"));
-        var clientUpdated = dbServiceClient
-                .getClient(clientSecondSelected.getId())
-                .orElseThrow(() -> new RuntimeException("Client not found, id:" + clientSecondSelected.getId()));
-        log.info("clientUpdated:{}", clientUpdated);
+        var serviceClient = new ServiceClientImpl(dbServiceClient);
 
-        log.info("All clients");
-        dbServiceClient.findAll().forEach(client -> log.info("client:{}", client));
+        return serviceClient;
     }
 }
