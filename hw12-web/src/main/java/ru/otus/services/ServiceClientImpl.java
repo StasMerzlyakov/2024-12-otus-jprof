@@ -25,9 +25,7 @@ public class ServiceClientImpl implements ServiceClient {
 
     @Override
     public List<ClientModel> findAll() {
-        return dbServiceClient.findAll().stream()
-                .map(client -> fromClient(client))
-                .toList();
+        return dbServiceClient.findAll().stream().map(this::fromClient).toList();
     }
 
     private ClientModel fromClient(Client client) {

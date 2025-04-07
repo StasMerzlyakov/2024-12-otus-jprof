@@ -1,8 +1,6 @@
 package ru.otus;
 
 import org.hibernate.cfg.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.otus.core.repository.DataTemplateHibernate;
 import ru.otus.core.repository.HibernateUtils;
 import ru.otus.core.sessionmanager.TransactionManagerHibernate;
@@ -19,8 +17,6 @@ import ru.otus.services.TemplateProcessor;
 import ru.otus.services.TemplateProcessorImpl;
 
 public class ClientApplication {
-
-    private static final Logger log = LoggerFactory.getLogger(ClientApplication.class);
 
     public static final String HIBERNATE_CFG_FILE = "hibernate.cfg.xml";
 
@@ -58,8 +54,6 @@ public class ClientApplication {
 
         var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
 
-        var serviceClient = new ServiceClientImpl(dbServiceClient);
-
-        return serviceClient;
+        return new ServiceClientImpl(dbServiceClient);
     }
 }

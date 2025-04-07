@@ -10,6 +10,7 @@ import ru.otus.services.ServiceClient;
 import ru.otus.services.TemplateProcessor;
 import ru.otus.web.ClientModel;
 
+@SuppressWarnings({"squid:S1989"})
 public class ClientServlet extends HttpServlet {
     private static final String CLIENTS_PAGE_TEMPLATE = "clients.html";
     private static final String TEMPLATE_ATTR_CLIENTS = "clients";
