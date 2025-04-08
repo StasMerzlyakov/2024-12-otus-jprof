@@ -11,10 +11,7 @@ import ru.otus.crm.model.Phone;
 import ru.otus.crm.service.DbServiceClientImpl;
 import ru.otus.server.ClientWebServer;
 import ru.otus.server.ClientWebServerImpl;
-import ru.otus.services.ServiceClient;
-import ru.otus.services.ServiceClientImpl;
-import ru.otus.services.TemplateProcessor;
-import ru.otus.services.TemplateProcessorImpl;
+import ru.otus.services.*;
 
 public class ClientApplication {
 
@@ -23,10 +20,16 @@ public class ClientApplication {
     private static final int WEB_SERVER_PORT = 8080;
     private static final String TEMPLATES_DIR = "/templates/";
 
+    private static final String REALM_PROPERTIES_FILE = "realm.properties";
+
     public static void main(String[] args) throws Exception {
         var serviceClient = createServiceClient();
         var templateProcessor = creteTemplateProcessor();
-        ClientWebServer server = new ClientWebServerImpl(WEB_SERVER_PORT, serviceClient, templateProcessor);
+
+        var authService = createAuthService();
+
+        ClientWebServer server =
+                new ClientWebServerImpl(WEB_SERVER_PORT, serviceClient, authService, templateProcessor);
 
         server.start();
         server.join();
@@ -55,5 +58,9 @@ public class ClientApplication {
         var dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
 
         return new ServiceClientImpl(dbServiceClient);
+    }
+
+    private static AuthService createAuthService() throws Exception {
+        return new AuthServiceImpl(REALM_PROPERTIES_FILE);
     }
 }
