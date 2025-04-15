@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Клиенты</title>
+</head>
+
+<body>
+<h4>Список клиентов</h4>
+
+
+<table style="width: 400px">
+    <thead>
+        <tr>
+            <td style="width: 50px">Id</td>
+            <td style="width: 150px">Имя</td>
+            <td style="width: 100px">Адрес</td>
+            <td style="width: 100px">Телефоны</td>
+        </tr>
+    </thead>
+    <tbody>
+        <#list clients as client>
+        <tr>
+            <td>${client.id}</td>
+            <td>${client.name}</td>
+            <td>${client.address}</td>
+            <td>${client.phones}</td>
+        </tr>
+        </#list>
+    </tbody>
+</table>
+
+<h4>Добавить клиента</h4>
+
+<form action="/clients" method="post">
+    <label for="name">Имя:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="address">Адрес:</label>
+    <input type="text" id="address" name="address" required>
+    <br>
+    <label for="phones">Телефоны(через запятую):</label>
+    <input type="phones" id="phones" name="phones" required>
+    <br>
+    <button type="submit">Добавить</button>
+</form>
+
+
+</body>
+</html>

@@ -39,3 +39,5 @@ include("hw11-cache:homework")
 findProject(":hw11-cache:homework")?.name = "homework"
 include("hw11-cache:api")
 findProject(":hw11-cache:api")?.name = "api"
+
+include("hw12-web")
