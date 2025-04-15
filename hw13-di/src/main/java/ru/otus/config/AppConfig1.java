@@ -1,10 +1,9 @@
 package ru.otus.config;
 
 import ru.otus.appcontainer.api.AppComponent;
-import ru.otus.appcontainer.api.AppComponentsContainerConfig;
 import ru.otus.services.*;
 
-@AppComponentsContainerConfig(order = 2)
+// @AppComponentsContainerConfig(order = 2)
 public class AppConfig1 {
 
     @AppComponent(order = 2, name = "gameProcessor")

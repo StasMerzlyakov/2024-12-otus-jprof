@@ -3,6 +3,8 @@ package ru.otus.appcontainer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import org.reflections.Reflections;
+import org.reflections.scanners.TypeAnnotationsScanner;
 import ru.otus.appcontainer.api.AppComponent;
 import ru.otus.appcontainer.api.AppComponentsContainer;
 import ru.otus.appcontainer.api.AppComponentsContainerConfig;
@@ -13,9 +15,15 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     private final List<Object> appComponents = new ArrayList<>();
     private final Map<String, Object> appComponentsByName = new HashMap<>();
 
-    // немного расширил интерфейс для возможности использования с несколькими классам
+    // немного расширил базовый конструктор для использования с несколькими классам
     public AppComponentsContainerImpl(Class<?>... initialConfigClasses) {
         processConfig(initialConfigClasses);
+    }
+
+    public AppComponentsContainerImpl(String packageName) {
+        Reflections reflections = new Reflections(packageName, new TypeAnnotationsScanner());
+        Set<Class<?>> configClasses = reflections.getTypesAnnotatedWith(AppComponentsContainerConfig.class);
+        processConfig(configClasses.toArray(new Class<?>[] {}));
     }
 
     private void processConfig(Class<?>... configClasses) {
@@ -96,15 +104,25 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
 
     @Override
     public <C> C getAppComponent(Class<C> componentClass) {
-        return (C) appComponents.stream()
-                .filter(obj -> componentClass.isInstance(obj))
-                .findFirst()
-                .orElse(null);
+        var resultList =
+                appComponents.stream().filter(componentClass::isInstance).toList();
+        if (resultList.isEmpty()) {
+            throw new IllegalArgumentException(String.format("Can't find bean with type %s", componentClass.getName()));
+        }
+
+        if (resultList.size() > 1) {
+            throw new IllegalArgumentException(
+                    String.format("Bean with type %s is not unique", componentClass.getName()));
+        }
+        return (C) resultList.get(0);
     }
 
     @Override
     public <C> C getAppComponent(String componentName) {
         Object obj = appComponentsByName.get(componentName);
+        if (obj == null) {
+            throw new IllegalArgumentException(String.format("Can't find bean with name %s", componentName));
+        }
         return (C) obj;
     }
 }
