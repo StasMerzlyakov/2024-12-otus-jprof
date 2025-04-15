@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import org.reflections.Reflections;
-import org.reflections.scanners.TypeAnnotationsScanner;
 import ru.otus.appcontainer.api.AppComponent;
 import ru.otus.appcontainer.api.AppComponentsContainer;
 import ru.otus.appcontainer.api.AppComponentsContainerConfig;
@@ -21,7 +20,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     }
 
     public AppComponentsContainerImpl(String packageName) {
-        Reflections reflections = new Reflections(packageName, new TypeAnnotationsScanner());
+        Reflections reflections = new Reflections(packageName);
         Set<Class<?>> configClasses = reflections.getTypesAnnotatedWith(AppComponentsContainerConfig.class);
         processConfig(configClasses.toArray(new Class<?>[] {}));
     }
@@ -64,31 +63,34 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
         for (List<Method> methodList : methodInitOrder.values()) {
             for (Method meth : methodList) {
                 String beanName = meth.getAnnotation(AppComponent.class).name();
-                if (appComponentsByName.containsKey(beanName)) {
-                    throw new IllegalArgumentException(String.format("Duplicate bean name config %s", beanName));
-                }
-
-                Object[] invocationObjects = new Object[meth.getParameterCount()];
-                for (int i = 0; i < meth.getParameterCount(); i++) {
-                    var type = meth.getParameterTypes()[i];
-                    Object objComponent = getAppComponent(type);
-                    if (objComponent == null) {
-                        throw new IllegalArgumentException(String.format(
-                                "Can't find bean of type %s required by method %s", type.getName(), meth.getName()));
-                    }
-                    invocationObjects[i] = objComponent;
-                }
-
-                try {
-                    Object bean = meth.invoke(configObj, invocationObjects);
-                    appComponents.add(bean);
-                    appComponentsByName.put(beanName, bean);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                } catch (InvocationTargetException e) {
-                    throw new RuntimeException(e);
-                }
+                processBeanCreationMethod(configObj, meth, beanName);
             }
+        }
+    }
+
+    private void processBeanCreationMethod(Object configObj, Method meth, String beanName)
+            throws IllegalArgumentException {
+        if (appComponentsByName.containsKey(beanName)) {
+            throw new IllegalArgumentException(String.format("Duplicate bean name config %s", beanName));
+        }
+
+        Object[] invocationObjects = new Object[meth.getParameterCount()];
+        for (int i = 0; i < meth.getParameterCount(); i++) {
+            var type = meth.getParameterTypes()[i];
+            Object objComponent = getAppComponent(type);
+            if (objComponent == null) {
+                throw new IllegalArgumentException(String.format(
+                        "Can't find bean of type %s required by method %s", type.getName(), meth.getName()));
+            }
+            invocationObjects[i] = objComponent;
+        }
+
+        try {
+            Object bean = meth.invoke(configObj, invocationObjects);
+            appComponents.add(bean);
+            appComponentsByName.put(beanName, bean);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 
