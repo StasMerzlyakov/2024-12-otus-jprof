@@ -16,6 +16,9 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+}
 rootProject.name = "jprof"
 include("hw01-gradle")
 include("hw02-generics")
@@ -41,3 +44,4 @@ include("hw11-cache:api")
 findProject(":hw11-cache:api")?.name = "api"
 
 include("hw12-web")
+include("hw13-di")
